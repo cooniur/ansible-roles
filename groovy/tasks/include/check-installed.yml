@@ -1,5 +1,4 @@
 ---
-
 - name: "Check if Groovy installed: find Groovy executable (1/3)..."
   shell: "su - -c 'which groovy'"
   sudo: True
@@ -20,5 +19,3 @@
      _groovy_is_installed: "{{ _groovy_which.rc == 0 and _groovy_current_version.rc == 0 and _groovy_current_version.stdout == _config.full_version }}"
   changed_when: False
   when: _groovy_current_version is defined
-
-- debug: var=_groovy_is_installed
