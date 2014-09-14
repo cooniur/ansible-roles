@@ -1,0 +1,74 @@
+---
+- name: "Create Tomcat context configuration directory..."
+  file:
+    path="{{ _config.catalina_home }}/conf"
+    state=directory
+
+- name: "Create Tomcat log directory..."
+  file:
+    path="{{ tomcat.log.dir }}"
+    state=directory
+
+- name: "Configure Tomcat server options..."
+  template:
+    src="../../templates/server.xml"
+    dest="{{ _config.catalina_home }}/conf/server.xml"
+
+- name: "Configure Tomcat management users..."
+  template:
+    src="../../templates/tomcat-users.xml"
+    dest="{{ _config.catalina_home }}/conf/tomcat-users.xml"
+
+- name: "Configure logging properties..."
+  template:
+    src="../../templates/logging.properties"
+    dest="{{ _config.catalina_home }}/conf/logging.properties"
+
+- name: "Configure Tomcat startup environment options..."
+  template:
+    src="../../templates/tomcat-bin-setenv.sh"
+    dest="{{ _config.catalina_home }}/bin/setenv.sh"
+
+- name: "Set Tomcat executable scripts permissions..."
+  file:
+    path="{{ _config.catalina_home }}/bin/{{ item }}"
+    mode=0755
+    state=file
+  with_items:
+    - startup.sh
+    - catalina.sh
+    - shutdown.sh
+    - setenv.sh
+
+- name: "Set Tomcat environment variables..."
+  template:
+    src="../../templates/tomcat-env.sh"
+    dest="{{ tomcat.envfile }}"
+    mode=0644
+
+- name: "Create Tomcat group..."
+  group:
+    name="{{ tomcat.user.system.group }}"
+    system=no
+    state=present
+
+- name: "Create Tomcat user..."
+  user:
+    name={{ tomcat.user.system.name }}
+    group={{ tomcat.user.system.group }}
+    createhome=no
+    state=present
+
+- name: "Set Tomcat home directory's owner and group..."
+  file:
+    path="{{ _config.catalina_home }}"
+    owner="{{ tomcat.user.system.name }}"
+    group="{{ tomcat.user.system.group }}"
+    state=directory
+    recurse=yes
+
+- name: "Install Tomcat service..."
+  template: 
+    src="../../templates/tomcat-service.sh"
+    dest="{{ tomcat.servicefile }}"
+    mode=0755

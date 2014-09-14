@@ -1,0 +1,13 @@
+---
+- name: "Download Tomcat..."
+  get_url:
+    url="{{ _config.url }}"
+    dest="{{ tomcat.dir.download }}/{{ _config.package_file }}"
+    force=no
+  register: _tomcat_download_result
+  ignore_errors: true
+
+- name: "Download Tomcat..."
+  fail:
+    msg="[{{ _tomcat_download_result.response }}]. Failed to download Tomcat. Please check the version {{ _config.full_version }} exists."
+  when: _tomcat_download_result is defined and _tomcat_download_result.failed

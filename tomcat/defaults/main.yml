@@ -1,0 +1,38 @@
+---
+# file: roles/tomcat/defaults/main.yml
+
+tomcat_version_major: "8"
+tomcat_version_minor: "0"
+tomcat_version_micro: "12"
+
+tomcat_download_dir: "/tmp/tomcat"
+tomcat_install_dir: "/var/local"
+
+tomcat_log_level: "FINE"
+tomcat_log_dir: "{{ __tomcat_catalina_home }}/logs"
+tomcat_log_limit: "1024"
+
+tomcat_port: "8080"
+tomcat_shutdown_port: "8005"
+tomcat_ajp_port: "8009"
+tomcat_redirect_port: "8443"
+
+tomcat_jmx_port_registry: "9797"
+tomcat_jmx_port_server: "9798"
+tomcat_jmx_auth: "false"
+tomcat_jmx_ssl: "false"
+
+# in milliseconds
+tomcat_connection_timeout: "20000"
+
+tomcat_management_users: [
+  { name: "tomcat", password: "tomcat", roles: "manager-gui,admin-gui" }
+]
+
+tomcat_jvm_mem_min: "512m"
+tomcat_jvm_mem_max: "1024m"
+tomcat_jvm_perm_size: "256m"
+tomcat_java_opts: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port={{ tomcat_jmx_port_registry }} -Dcom.sun.management.jmxremote.authenticate={{ tomcat_jmx_auth }} -Dcom.sun.management.jmxremote.ssl={{ tomcat_jmx_ssl }} -Xms{{ tomcat_jvm_mem_min }} -Xmx{{ tomcat_jvm_mem_max }} -XX:MaxPermSize={{ tomcat_jvm_perm_size }}"
+
+tomcat_sys_user_name: "tomcat"
+tomcat_sys_user_group: "tomcat"

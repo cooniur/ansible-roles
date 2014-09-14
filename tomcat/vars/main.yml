@@ -1,0 +1,36 @@
+---
+# file: roles/tomcat/vars/main.yml
+
+tomcat:
+  version:
+    major: "{{ tomcat_version_major }}"
+    minor: "{{ tomcat_version_minor }}"
+    micro: "{{ tomcat_version_micro }}"
+  dir:
+    download: "{{ tomcat_download_dir }}"
+    install: "{{ tomcat_install_dir }}"
+  log:
+    dir: "{{ tomcat_log_dir }}"
+    level: "{{ tomcat_log_level }}"
+    limit: "{{ tomcat_log_limit }}"
+  port:
+    http: "{{ tomcat_port }}"
+    shutdown: "{{ tomcat_shutdown_port }}"
+    ajp: "{{ tomcat_ajp_port }}"
+    redirect: "{{ tomcat_redirect_port }}"
+    jmx:
+      registry: "{{ tomcat_jmx_port_registry }}"
+      server: "{{ tomcat_jmx_port_server }}"
+  connection:
+    timeout: "{{ tomcat_connection_timeout }}"
+  user:
+    management: "{{ tomcat_management_users }}"
+    system:
+      name: "{{ tomcat_sys_user_name }}"
+      group: "{{ tomcat_sys_user_group }}"
+  java:
+    options: "{{ tomcat_java_opts }}"
+  envfile: "/etc/profile.d/tomcat-env.sh"
+  servicefile: "/etc/init.d/tomcat"
+
+__tomcat_catalina_home: "{{ tomcat_install_dir }}/apache-tomcat-{{ tomcat_version_major }}.{{ tomcat_version_minor }}.{{ tomcat_version_micro }}"

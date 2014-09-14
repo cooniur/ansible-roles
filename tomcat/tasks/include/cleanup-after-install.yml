@@ -1,0 +1,6 @@
+---
+- name: "Clean up download directory..."
+  file:
+    path="{{ tomcat.dir.download }}"
+    state=absent
+  tags: tomcat_cleanup

@@ -1,0 +1,7 @@
+---
+- name: "Start Tomcat service..."
+  service:
+    name=tomcat
+    state=restarted
+    enabled=yes
+  tags: tomcat_start

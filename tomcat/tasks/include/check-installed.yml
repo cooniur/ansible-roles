@@ -1,0 +1,23 @@
+---
+  - name: "Check if Tomcat installed: find Tomcat home (1/4)..."
+    stat:
+      path="{{ _config.catalina_home }}"
+    ignore_errors: True
+    changed_when: False
+    register: _tomcat_check_home
+
+  - name: "Check if Tomcat installed: check Tomcat home (2/4)..."
+    set_fact:
+      _tomcat_home_exists: "{{ _tomcat_check_home.stat.exists and _tomcat_check_home.stat.isdir }}"
+
+  - name: "Check if Tomcat installed: find Tomcat version (3/4)..."
+    shell: 'su - -c "{{ _config.catalina_home }}/bin/version.sh | tail -n 8 | head -n 1 | cut -d\"/\" -f 2"'
+    sudo: True
+    ignore_errors: True
+    changed_when: False
+    register: _tomcat_current_version
+
+  - name: "Check if Tomcat is installed: check if Tomcat installed (4/4)..."
+    set_fact:
+       _tomcat_is_installed: "{{ _tomcat_home_exists and _tomcat_current_version is defined and _tomcat_current_version.rc == 0 and _tomcat_current_version.stdout == _config.full_version }}"
+    changed_when: False

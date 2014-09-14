@@ -1,0 +1,11 @@
+---
+# file: roles/tomcat/meta/main.yml
+
+dependencies:
+  - { role: credentials, credentials_list: [
+      { username: "{{ tomcat.user.name }}",
+        groupname: "{{ tomcat.user.group }}",
+        is_createhome: "no",
+        is_system: "yes" 
+      }
+    ]}

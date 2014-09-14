@@ -1,0 +1,10 @@
+---
+- name: "Install Tomcat..."
+  shell: 'tar -xf "{{ tomcat.dir.download }}/{{ _config.package_file }}" --directory="{{ tomcat.dir.install }}"'
+  register: _tomcat_install_result
+  ignore_errors: true
+
+- name: "Install Tomcat..."
+  fail:
+    msg="[{{ _tomcat_install_result.stderr }}]. Failed to install Tomcat {{ _config.full_version }}."
+  when: _tomcat_install_result is defined and _tomcat_install_result.rc != 0

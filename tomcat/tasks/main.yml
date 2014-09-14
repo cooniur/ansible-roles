@@ -1,0 +1,26 @@
+---
+# file: roles/tomcat/tasks/main.yml
+
+- include: ./include/check-jdk.yml
+
+- include: ./include/setup-installation.yml
+
+- include: ./include/check-installed.yml
+
+- include: ./include/cleanup-before-install.yml
+  when: not _tomcat_is_installed | bool
+
+- include: ./include/download.yml
+  when: not _tomcat_is_installed | bool
+
+- include: ./include/install.yml
+  when: not _tomcat_is_installed | bool
+
+- include: ./include/configure.yml
+  when: not _tomcat_is_installed | bool
+
+- include: ./include/cleanup-after-install.yml
+  when: not _tomcat_is_installed | bool
+
+- include: ./include/start-tomcat.yml
+  when: not _tomcat_is_installed | bool

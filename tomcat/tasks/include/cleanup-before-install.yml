@@ -1,0 +1,34 @@
+---
+- name: "Create download directory..."
+  file:
+    path="{{ tomcat.dir.download }}"
+    recurse=yes
+    state=directory
+
+- name: "Try to stop existing Tomcat service..."
+  service:
+    name=tomcat
+    state=stopped
+    enabled=no
+  ignore_errors: yes
+
+- name: "Remove Tomcat environment variables..."
+  file:
+    name="{{ tomcat.envfile }}"
+    state=absent
+
+- name: "Remove Tomcat service..."
+  file:
+    name="{{ tomcat.servicefile }}"
+    state=absent
+
+- name: "Clean up Tomcat installation directory..."
+  file:
+    path="{{ _config.catalina_home }}"
+    state=absent
+
+- name: "Create installation directory..."
+  file:
+    path="{{ _config.catalina_home }}"
+    recurse=yes
+    state=directory

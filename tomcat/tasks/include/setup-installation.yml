@@ -1,0 +1,32 @@
+---
+- name: "Setup Tomcat installation: get JDK home directory (1/4)..."
+  shell: "echo $(dirname $(dirname {{ __tomcat_java_path.stdout }}))"
+  changed_when: False
+  register: __tomcat_jdk_home_dir
+  when: __tomcat_java_path is defined
+
+# JDK Home directory is used in tomcat-service.sh template
+- name: "Setup Tomcat installation: get JDK home directory (2/4)..."
+  set_fact:
+    _config:
+       jdk_home: "{{ __tomcat_jdk_home_dir.stdout }}"
+       full_version: "{{ tomcat.version.major }}.{{ tomcat.version.minor }}.{{ tomcat.version.micro }}"
+       catalina_home: "{{ __tomcat_catalina_home }}"
+  when: __tomcat_jdk_home_dir is defined and __tomcat_catalina_home is defined
+
+- name: "Setup Tomcat installation (3/4)..."
+  set_fact:
+    _config:
+       jdk_home: "{{ _config.jdk_home }}"
+       full_version: "{{ _config.full_version }}"
+       catalina_home: "{{ _config.catalina_home }}"
+       package_file: "apache-tomcat-{{ _config.full_version }}.tar.gz"
+
+- name: "Setup Tomcat installation (4/4)..."
+  set_fact:
+    _config:
+       jdk_home: "{{ _config.jdk_home }}"
+       full_version: "{{ _config.full_version }}"
+       catalina_home: "{{ _config.catalina_home }}"
+       package_file: "{{ _config.package_file }}"
+       url: "http://archive.apache.org/dist/tomcat/tomcat-{{ tomcat.version.major }}/v{{ _config.full_version }}/bin/{{ _config.package_file }}"
