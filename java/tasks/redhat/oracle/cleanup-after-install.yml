@@ -1,0 +1,5 @@
+---
+- name: "Clean up after Oracle JDK installation..."
+  file:
+    path="{{ jdk.dir.download }}"
+    state=absent

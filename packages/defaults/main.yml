@@ -1,0 +1,4 @@
+---
+# file: roles/packages/defaults/main.yml
+
+packages_list: [ "" ]

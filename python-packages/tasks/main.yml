@@ -1,0 +1,8 @@
+---
+# file: roles/python_packages/tasks/main.yml
+
+- name: "Install python packages..."
+  pip:
+    name="{{ item }}"
+    state=latest
+  with_items: "{{ python_packages.list }}"

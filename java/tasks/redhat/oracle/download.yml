@@ -1,0 +1,10 @@
+---
+- name: "Download Oracle JDK..."
+  shell: 'wget --quiet --output-document={{ jdk.dir.download }}/{{ _config.package_file }} --no-cookies --no-check-certificate --header "{{ jdk.download.cookie }} " "{{ _config.url }}"'
+  ignore_errors: True
+  register: _jdk_download_result
+
+- name: "Download Oracle JDK (check errors)..."
+  fail:
+    msg="Failed to download Oracle JDK. Please verify JDK version {{ _config.jdk_version_with_build}} exists."
+  when: _jdk_download_result is defined and _jdk_download_result.rc != 0

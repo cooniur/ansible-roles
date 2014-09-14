@@ -1,0 +1,13 @@
+---
+# file: roles/java/tasks/redhat/redhat.yml
+
+- name: "Begin of JDK installation."
+  debug:
+    msg="Begin of JDK installation."
+
+- include: ./oracle/main.yml
+  when: jdk is defined and jdk.vendor == "oracle" and jdk.version is defined
+
+- name: "End of JDK installation."
+  debug:
+    msg="End of JDK installation."

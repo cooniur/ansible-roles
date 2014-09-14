@@ -1,0 +1,28 @@
+---
+
+- name: 'Remove JDK environment variables...'
+  file:
+    name="{{ jdk.envfile }}"
+    state=absent
+
+- name: "Clean up JDK home directory..."
+  file:
+    path="{{ _config.jdk_home }}"
+    state=absent
+
+- name: "Clean up download directory..."
+  file:
+    path="{{ jdk.dir.download }}"
+    state=absent
+
+- name: "Create the download directory..."
+  file:
+    path="{{ jdk.dir.download }}"
+    recurse=yes
+    state=directory
+
+- name: "Create JDK installation directory..."
+  file:
+    path="{{ _config.jdk_home }}"
+    recurse=yes
+    state=directory

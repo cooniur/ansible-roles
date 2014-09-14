@@ -1,0 +1,18 @@
+---
+# file: roles/java/vars/main.yml
+
+jdk:
+  vendor: '{{ jdk_vendor }}'
+  version: 
+    m: '{{ jdk_version_major }}'
+    u: '{{ jdk_version_update }}'
+    b: '{{ jdk_version_build }}'
+  dir:
+    download: '{{ jdk_download_dir }}'
+    install: '{{ jdk_install_dir }}'
+  user:
+    name: "root"
+    group: "root"
+  envfile: "/etc/profile.d/java-env.sh"
+  download:
+    cookie: "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"

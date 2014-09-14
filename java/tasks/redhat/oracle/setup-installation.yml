@@ -1,0 +1,28 @@
+---
+- name: "Gather facts for Oracle JDK installation (1/3)..."
+  set_fact:
+    _config:
+      jdk_build: "b{{ jdk.version.b }}"
+      jdk_version: '{{ jdk.version.m }}u{{ jdk.version.u }}'
+  when: jdk.version is defined and jdk.version.m is defined and jdk.version.u is defined and jdk.version.b is defined
+
+- name: "Gather facts for Oracle JDK installation (2/3)..."
+  set_fact:
+    _config:
+      jdk_version: "{{ _config.jdk_version }}"
+      jdk_version_with_build: "{{ _config.jdk_version }}-{{ _config.jdk_build }}"
+  when: _config.jdk_version is defined
+
+- name: "Gather facts for Oracle JDK installation (3/3)..."
+  set_fact:
+    _config:
+      jdk_version: "{{ _config.jdk_version }}"
+      jdk_version_with_build: "{{ _config.jdk_version_with_build }}"
+      url: "http://download.oracle.com/otn-pub/java/jdk/{{ _config.jdk_version_with_build }}/jdk-{{ _config.jdk_version }}-linux-x64.tar.gz"
+      package_file: "{{ jdk.vendor }}-jdk-{{ _config.jdk_version }}-linux-x64.tar.gz"
+      jdk_home: "{{ jdk.dir.install }}/jdk1.{{ jdk.version.m }}.0_{{ jdk.version.u }}"
+  when: _config.jdk_version is defined and _config.jdk_version_with_build is defined
+
+- name: "Selected Oracle JDK version... "
+  debug:
+    msg="Selected Oracle JDK version is {{ _config.jdk_version_with_build }}."

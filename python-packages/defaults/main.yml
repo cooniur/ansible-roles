@@ -1,0 +1,4 @@
+---
+# file: roles/python_packages/defaults/main.yml
+
+python_packages_list: [ "" ]

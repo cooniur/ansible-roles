@@ -1,0 +1,21 @@
+---
+# file: roles/java/tasks/redhat/oracle/main.yml
+
+- include: ./setup-installation.yml
+
+- include: ./check-installed.yml
+
+- include: ./cleanup-before-install.yml
+  when: _jdk_is_installed is defined and not _jdk_is_installed|bool
+
+- include: ./download.yml
+  when: _jdk_is_installed is defined and not _jdk_is_installed|bool
+
+- include: ./install.yml
+  when: _jdk_is_installed is defined and not _jdk_is_installed|bool
+
+- include: ./configure.yml
+  when: _jdk_is_installed is defined and not _jdk_is_installed|bool
+
+- include: ./cleanup-after-install.yml
+  when: _jdk_is_installed is defined and not _jdk_is_installed|bool

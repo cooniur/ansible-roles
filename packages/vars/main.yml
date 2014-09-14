@@ -1,0 +1,5 @@
+---
+# file: roles/packages/vars/main.yml
+
+packages:
+  list: "{{ packages_list }}"

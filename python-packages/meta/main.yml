@@ -1,0 +1,5 @@
+---
+# file: roles/python-packages/meta/main.yml
+
+dependencies:
+  - { role: packages, packages_list: [ "python-pip" ] }

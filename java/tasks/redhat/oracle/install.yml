@@ -1,0 +1,3 @@
+---
+- name: "Install Oracle JDK..."
+  shell: 'tar -xf "{{ jdk.dir.download }}/{{ _config.package_file }}" --directory="{{ jdk.dir.install }}"'

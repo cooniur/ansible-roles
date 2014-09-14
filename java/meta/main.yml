@@ -1,0 +1,5 @@
+---
+# file: roles/java/meta/main.yml
+
+dependencies:
+  - { role: packages, packages_list: [ "libselinux-python", "wget" ] }
