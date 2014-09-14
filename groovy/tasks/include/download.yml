@@ -1,0 +1,13 @@
+---
+- name: "Download Groovy..."
+  get_url:
+    url="{{ _config.url }}"
+    dest="{{ groovy.dir.download }}/{{ _config.package_file }}"
+    force=no
+  register: _groovy_download_result
+  ignore_errors: true
+
+- name: "Download Groovy (check errors)..."
+  fail:
+    msg="[{{ _download_result.response }}]. Failed to download Groovy. Please check the version {{ _config.full_version }} exists."
+  when: _groovy_download_result is defined and _groovy_download_result.failed

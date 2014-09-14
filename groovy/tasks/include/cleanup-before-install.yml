@@ -1,0 +1,27 @@
+---
+- name: "Remove Groovy environment variables..."
+  file:
+    name="{{ groovy.envfile }}"
+    state=absent
+
+- name: "Clean up Groovy home directory..."
+  file:
+    path="{{ _config.groovy_home }}"
+    state=absent
+
+- name: "Clean up Groovy download directory..."
+  file:
+    path="{{ groovy.dir.download }}"
+    state=absent
+
+- name: "Create download directory..."
+  file:
+    path="{{ groovy.dir.download }}"
+    recurse=yes
+    state=directory
+
+- name: "Create home directory..."
+  file:
+    path="{{ _config.groovy_home }}"
+    recurse=yes
+    state=directory

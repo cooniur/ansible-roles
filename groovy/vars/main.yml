@@ -1,0 +1,15 @@
+---
+# file: roles/groovy/vars/main.yml
+
+groovy:
+  version:
+    major: "{{ groovy_version_major }}"
+    minor: "{{ groovy_version_minor }}"
+    patch: "{{ groovy_version_patch }}"
+  dir:
+    download: "{{ groovy_download_dir }}"
+    install: "{{ groovy_install_dir }}"
+  user:
+    name: "root"
+    group: "root"
+  envfile: "/etc/profile.d/groovy-env.sh"

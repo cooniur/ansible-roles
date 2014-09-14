@@ -1,0 +1,11 @@
+---
+- name: "Install Groovy..."
+  shell: 'unzip -o "{{ groovy.dir.download }}/{{ _config.package_file }}" -d "{{ groovy.dir.install }}"'
+  sudo: True
+  register: _groovy_install_result
+  ignore_errors: true
+
+- name: "Install Groovy (check errors)..."
+  fail:
+    msg="[{{ _groovy_install_result.stderr }}]. Failed to install Groovy {{ _config.full_version }}."
+  when: _groovy_install_result is defined and _groovy_install_result.rc != 0

@@ -1,0 +1,5 @@
+---
+- name: "Clean up download directory..."
+  file:
+    path="{{ groovy.dir.download }}"
+    state=absent

@@ -1,0 +1,28 @@
+---
+- name: "Setup Groovy installation: get JDK home directory (1/4)..."
+  shell: "echo $(dirname $(dirname {{ __groovy_java_path.stdout }}))"
+  register: __groovy_jdk_home_dir
+  when: __groovy_java_path is defined
+
+- name: "Setup Groovy installation: get JDK home directory (2/4)..."
+  set_fact:
+    _config:
+       jdk_home: "{{ __groovy_jdk_home_dir.stdout }}"
+       full_version: "{{ groovy.version.major }}.{{ groovy.version.minor }}.{{ groovy.version.patch }}"
+  when: __groovy_jdk_home_dir is defined
+
+- name: "Setup Groovy installation (3/4)..."
+  set_fact:
+    _config:
+       jdk_home: "{{ _config.jdk_home }}"
+       full_version: "{{ _config.full_version }}"
+       package_file: "groovy-binary-{{ _config.full_version }}.zip"
+
+- name: "Setup Groovy installation (4/4)..."
+  set_fact:
+    _config:
+       jdk_home: "{{ _config.jdk_home }}"
+       groovy_home: "{{ groovy.dir.install }}/groovy-{{ _config.full_version }}"
+       full_version: "{{ _config.full_version }}"
+       package_file: "{{ _config.package_file }}"
+       url: "http://dl.bintray.com/groovy/maven/{{ _config.package_file }}"

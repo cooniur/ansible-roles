@@ -1,0 +1,14 @@
+---
+- name: "Set Groovy home directory's owner and group..."
+  file:
+    path="{{ _config.groovy_home }}"
+    owner="{{ groovy.user.name }}"
+    group="{{ groovy.user.group }}"
+    state=directory
+    recurse=yes
+
+- name: "Set Groovy environment variables..."
+  template:
+    src="../../templates/groovy-env.sh"
+    dest="{{ groovy.envfile }}"
+    mode=0644

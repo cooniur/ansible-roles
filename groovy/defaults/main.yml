@@ -1,0 +1,9 @@
+---
+# file: roles/groovy/defaults/main.yml
+
+groovy_version_major: "2"
+groovy_version_minor: "3"
+groovy_version_patch: "6"
+
+groovy_install_dir: "/usr/lib/groovy"
+groovy_download_dir: "/tmp/groovy"

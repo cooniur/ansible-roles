@@ -1,0 +1,23 @@
+---
+# file: roles/groovy/tasks/main.yml
+
+- include: ./include/check-jdk.yml
+
+- include: ./include/setup-installation.yml
+
+- include: ./include/check-installed.yml
+
+- include: ./include/cleanup-before-install.yml
+  when: _groovy_is_installed is defined and not _groovy_is_installed|bool
+
+- include: ./include/download.yml
+  when: _groovy_is_installed is defined and not _groovy_is_installed|bool
+
+- include: ./include/install.yml
+  when: _groovy_is_installed is defined and not _groovy_is_installed|bool
+
+- include: ./include/configure.yml
+  when: _groovy_is_installed is defined and not _groovy_is_installed|bool
+
+- include: ./include/cleanup-after-install.yml
+  when: _groovy_is_installed is defined and not _groovy_is_installed|bool

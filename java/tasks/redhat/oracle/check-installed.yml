@@ -4,7 +4,7 @@
   sudo: True
   ignore_errors: True
   changed_when: False
-  register: _jdk_which_java
+  register: _jdk_which
 
 - name: "Check if JDK is installed: find current JDK version (2/3)..."
   shell: su - -c 'java -version 2>&1 | grep -o "[[:digit:]]\.[[:digit:]]\.[[:digit:]]_[[:digit:]]\+\\-b[[:digit:]]\+"'
@@ -12,10 +12,10 @@
   ignore_errors: True
   changed_when: False
   register: _jdk_current_version
-  when: _jdk_which_java is defined
+  when: _jdk_which is defined
 
 - name: "Check if JDK is installed: check if JDK installed (3/3)..."
   set_fact:
-     _jdk_is_installed: "{{ _jdk_which_java.rc == 0 and _jdk_current_version.rc == 0 and _jdk_current_version.stdout == _config.jdk_version_with_build_for_check }}"
+     _jdk_is_installed: "{{ _jdk_which.rc == 0 and _jdk_current_version.rc == 0 and _jdk_current_version.stdout == _config.jdk_version_with_build_for_check }}"
   changed_when: False
   when: _jdk_current_version is defined

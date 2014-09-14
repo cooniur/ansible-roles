@@ -1,0 +1,24 @@
+---
+
+- name: "Check if Groovy installed: find Groovy executable (1/3)..."
+  shell: "su - -c 'which groovy'"
+  sudo: True
+  ignore_errors: True
+  changed_when: False
+  register: _groovy_which
+
+- name: "Check if Groovy is installed: find current Groovy version (2/3)..."
+  shell: su - -c 'groovy -version | cut -d" " -f 3'
+  sudo: True
+  ignore_errors: True
+  changed_when: False
+  register: _groovy_current_version
+  when: _groovy_which is defined
+
+- name: "Check if Groovy is installed: check if Groovy installed (3/3)..."
+  set_fact:
+     _groovy_is_installed: "{{ _groovy_which.rc == 0 and _groovy_current_version.rc == 0 and _groovy_current_version.stdout == _config.full_version }}"
+  changed_when: False
+  when: _groovy_current_version is defined
+
+- debug: var=_groovy_is_installed

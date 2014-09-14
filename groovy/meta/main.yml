@@ -1,0 +1,5 @@
+---
+# file: roles/groovy/meta/main.yml
+
+dependencies:
+  - { role: packages, packages_list: [ "wget", "unzip" ] }

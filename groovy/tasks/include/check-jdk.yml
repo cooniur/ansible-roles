@@ -1,0 +1,12 @@
+---
+- name: "Check if JDK is installed and in $PATH..."
+  shell: "su - -c 'which java'"
+  sudo: True
+  ignore_errors: True
+  changed_when: False
+  register: __groovy_java_path
+
+- name: "Check if JDK is installed and in $PATH (check errors)..."
+  fail:
+    msg="JDK is absent from $PATH. Please install JDK first."
+  when: __groovy_java_path is defined and __groovy_java_path.rc != 0
