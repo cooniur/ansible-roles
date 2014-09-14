@@ -21,6 +21,7 @@
       url: "http://download.oracle.com/otn-pub/java/jdk/{{ _config.jdk_version_with_build }}/jdk-{{ _config.jdk_version }}-linux-x64.tar.gz"
       package_file: "{{ jdk.vendor }}-jdk-{{ _config.jdk_version }}-linux-x64.tar.gz"
       jdk_home: "{{ jdk.dir.install }}/jdk1.{{ jdk.version.m }}.0_{{ jdk.version.u }}"
+      jdk_version_with_build_for_check: "1.{{ jdk.version.m }}.0_{{ jdk.version.u }}-b{{ jdk.version.b }}"
   when: _config.jdk_version is defined and _config.jdk_version_with_build is defined
 
 - name: "Selected Oracle JDK version... "
